@@ -1,0 +1,72 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+        Produtos | TACNS Games
+{% endblock %}
+
+{% block content %}
+
+<div class="container my-4">
+    <h1>{{ titulo }}</h1>
+    <p class="lead text-muted">{{ subtitulo }}</p>
+
+    <div class="row mt-4">
+        
+        <!-- MENU LATERAL DE CATEGORIAS -->
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Categorias</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{% url 'loja:produtos' %}" class="list-group-item list-group-item-action">
+                        Todos os Produtos
+                    </a>
+                    
+                    {% for categoria in categorias_principais %}
+                        <!-- NÍVEL 1: Categoria Principal (usando categoria.id) -->
+                        <a href="{% url 'loja:produtos_categoria' categoria.id %}" class="list-group-item list-group-item-action fw-bold bg-light">
+                            {{ categoria.nome }}
+                        </a>
+                        
+                        <!-- NÍVEL 2: Formatos (usando subcategoria.id) -->
+                        {% for subcategoria in categoria.subcategorias.all %}
+                            <a href="{% url 'loja:produtos_categoria' subcategoria.id %}" class="list-group-item list-group-item-action ps-4 border-0 text-primary">
+                                {{ subcategoria.nome }}
+                            </a>
+                            
+                            <!-- NÍVEL 3: Plataformas (usando plataforma.id) -->
+                            {% for plataforma in subcategoria.subcategorias.all %}
+                                <a href="{% url 'loja:produtos_categoria' plataforma.id %}" class="list-group-item list-group-item-action ps-5 border-0 small">
+                                    - {{ plataforma.nome }}
+                                </a>
+                            {% endfor %}
+                            
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- GRELHA DE PRODUTOS -->
+        <div class="col-md-9">
+            <div class="row">
+                {% for produto in produtos %}
+                    <div class="col-md-4 mb-4">
+                        <!-- Atenção à correção do caminho da pasta loja -->
+                        {% include 'loja/partials/produto_card.html' %}
+                    </div>
+                {% empty %}
+                    <div class="col-12">
+                        <div class="alert alert-warning">
+                            Nenhum produto encontrado nesta categoria.
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

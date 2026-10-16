@@ -1,0 +1,70 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h1 class="mb-4">Meus pedidos</h1>
+
+    {% if pedidos %}
+
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Data</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for pedido in pedidos %}
+                        <tr>
+                            <td>#{{ pedido.id }}</td>
+
+                            <td>
+                                {{ pedido.data_criacao|date:"d/m/Y H:i" }}
+                            </td>
+
+                            <td>
+                                R$ {{ pedido.total|floatformat:2 }}
+                            </td>
+
+                            <td>
+                                {{ pedido.get_status_display }}
+                            </td>
+
+                            <td>
+                                <a
+                                    href="{% url 'pedidos:pedido_detalhe' pedido.id %}"
+                                    class="btn btn-outline-primary btn-sm"
+                                >
+                                    Ver detalhes
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+    {% else %}
+
+        <div class="alert alert-info">
+            Você ainda não realizou nenhum pedido.
+        </div>
+
+        <a href="{% url 'loja:produtos' %}" class="btn btn-primary">
+            Ver produtos
+        </a>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

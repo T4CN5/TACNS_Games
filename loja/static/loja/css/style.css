@@ -1,0 +1,103 @@
+/* Importar uma fonte moderna do Google (Poppins) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* Redefinir a fonte principal e o fundo da página */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #121212; /* Fundo cinzento muito escuro, quase preto */
+    color: #e0e0e0; /* Texto claro para leitura confortável */
+}
+
+/* Ajuste da Barra de Navegação */
+.navbar {
+    background-color: #141414 !important; /* Cinzento muito escuro para os detalhes */
+    border-bottom: 3px solid #8B0000; /* Vermelho escuro profundo */
+}
+
+/* Alterar a cor das badges (como a bolinha do carrinho) para combinar */
+.bg-primary {
+    background-color: #8B0000 !important;
+}
+
+.text-primary {
+    color: #8B0000 !important;
+}
+
+/* Ajuste dos Títulos Gerais */
+h1, h2, h3, h4, h5 {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+/* Ajuste dos Cartões de Produto para o Dark Mode */
+.card {
+    background-color: #1e1e1e;
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out; /* Animação suave */
+}
+
+/* Efeito ao passar o mouse (hover) nos cartões */
+.card:hover {
+    transform: translateY(-5px); /* O cartão "sobe" ligeiramente */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+/* Textos dentro dos cartões */
+.card .text-muted {
+    color: #a0a0a0 !important;
+}
+
+/* Forçar texto claro dentro dos cartões para contraste com o fundo escuro */
+.card, 
+.card-body, 
+.card-title, 
+.card-text {
+    color: #e0e0e0 !important;
+}
+
+/* Deixar os links dos títulos dos jogos brancos também */
+.card a {
+    color: #ffffff !important;
+    text-decoration: none;
+}
+
+.card a:hover {
+    color: #8B0000 !important; /* Fica vermelho ao passar o rato */
+}
+
+/* =========================================
+   MENU LATERAL DE CATEGORIAS (FILTRO)
+   ========================================= */
+
+/* Fundo e texto dos itens da lista */
+.list-group-item {
+    background-color: #1e1e1e !important; /* Mesmo fundo escuro dos cartões */
+    color: #e0e0e0 !important; /* Texto claro para leitura */
+    border-color: #333333 !important; /* Bordas mais subtis e escuras */
+}
+
+/* Efeito ao passar o rato (hover) nas categorias */
+.list-group-item-action:hover, 
+.list-group-item-action:focus {
+    background-color: #2a2a2a !important; /* Fica ligeiramente mais claro */
+    color: #ffffff !important; /* Texto fica branco puro */
+}
+
+/* Ajustar o cabeçalho do filtro ("Categorias") para combinar com a navbar */
+.card-header {
+    background-color: #141414 !important;
+    border-bottom: 2px solid #8B0000 !important; /* Linha com o vermelho da TACNS Games */
+}
+
+/* =========================================
+   PADRONIZAÇÃO DAS IMAGENS DOS PRODUTOS
+   ========================================= */
+
+.card-img-top {
+    height: 280px; /* Define uma altura fixa igual para todas as imagens */
+    object-fit: cover; /* Faz a imagem preencher o espaço sem a distorcer (corta ligeiramente os excessos) */
+    object-position: top; /* Foca no topo da imagem para não cortar as faixas da PS5 ou Xbox */
+    background-color: #141414; /* Fundo escuro de segurança para imagens com fundo transparente */
+    border-bottom: 1px solid #333333; /* Uma linha subtil a separar a imagem do texto */
+}

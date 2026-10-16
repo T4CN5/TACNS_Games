@@ -1,0 +1,170 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3">
+    <div class="container">
+
+        <!-- LOGO -->
+        <a class="navbar-brand fw-bold fs-4"
+           href="{% url 'home' %}">
+            <span class="badge bg-primary rounded-3 me-2">S</span>
+            SneakZone
+        </a>
+
+        <!-- BOTÃO PARA CELULAR -->
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#menuSneakZone"
+            aria-controls="menuSneakZone"
+            aria-expanded="false"
+            aria-label="Abrir menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- MENU PRINCIPAL -->
+        <div class="collapse navbar-collapse" id="menuSneakZone">
+
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+
+                <!-- HOME -->
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'home' %}">
+                        Home
+                    </a>
+                </li>
+
+                <!-- PRODUTOS -->
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'produtos' %}">
+                        Produtos
+                    </a>
+                </li>
+
+                <!-- SOBRE -->
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'sobre' %}">
+                        Sobre
+                    </a>
+                </li>
+
+                <!-- CONTATO -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link text-white" href="{% url 'contato' %}">
+                        Contato
+                    </a>
+                </li>
+
+                <!-- PEDIDOS -->
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'meus_pedidos' %}">
+                        Meus Pedidos
+                    </a>
+                </li>
+
+                <!-- CARRINHO -->
+                <li class="nav-item" >
+                    <a class="nav-link text-white" href="{% url 'carrinho' %}">
+                        🛒 Carrinho
+
+                        {% if quantidade_carrinho > 0 %}
+                            <span class="badge rounded-pill bg-danger">
+                                {{ quantidade_carrinho }}
+                            </span>
+                        {% endif %}
+                    </a>
+                </li>
+
+                {% if user.is_authenticated %}
+
+                    <!-- MINHA CONTA -->
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            👤 Olá, {{ user.first_name|default:user.username }}
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+
+                            {% if user.is_staff %}
+                                <li>
+                                    <h6 class="dropdown-header">
+                                        Administração
+                                    </h6>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item"
+                                       href="/admin/">
+                                        Painel administrativo
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item"
+                                       href="{% url 'produto_novo' %}">
+                                        + Novo produto
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                            {% endif %}
+
+                            <li>
+                                <form method="post"
+                                      action="{% url 'logout' %}">
+                                    {% csrf_token %}
+
+                                    <button type="submit"
+                                            class="dropdown-item text-danger">
+                                        Sair da conta
+                                    </button>
+                                </form>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                {% else %}
+
+                    <!-- ACESSO -->
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Minha conta
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+
+                            <li>
+                                <a class="dropdown-item"
+                                   href="{% url 'login' %}">
+                                    Entrar
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item"
+                                   href="{% url 'cadastro' %}">
+                                    Criar conta
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>

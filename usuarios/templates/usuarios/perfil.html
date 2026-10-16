@@ -1,0 +1,39 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="card usuario-card">
+
+        <div class="card-body p-5">
+
+            <h1>
+                Minha conta
+            </h1>
+
+            <hr>
+
+            <p>
+                <strong>Nome:</strong>
+                {{ user.first_name }}
+                {{ user.last_name }}
+            </p>
+
+            <p>
+                <strong>Usuário:</strong>
+                {{ user.username }}
+            </p>
+
+            <p>
+                <strong>E-mail:</strong>
+                {{ user.email }}
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

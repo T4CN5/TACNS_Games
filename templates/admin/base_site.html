@@ -1,0 +1,36 @@
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% block title %}
+    TACNS Games | Administração
+{% endblock %}
+
+
+{% block branding %}
+
+<div class="TACNS Games-brand">
+
+    <div class="TACNS Games-logo">
+        TACNS Games
+    </div>
+
+    <div class="TACNS Games-subtitle">
+        Painel Administrativo
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block extrastyle %}
+
+{{ block.super }}
+
+<link
+    rel="stylesheet"
+    href="{% static 'admin/css/admin.css' %}"
+>
+
+{% endblock %}

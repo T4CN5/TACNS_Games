@@ -1,0 +1,29 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h1 class="mb-4">
+        Cadastrar produto
+    </h1>
+
+    <form method="post" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button
+            type="submit"
+            class="btn btn-primary">
+
+            Salvar produto
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

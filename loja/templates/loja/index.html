@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %} 
+
+{% block title %} Home | TACNS Games 
+
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ titulo }}</h1>
+
+<p>{{ subtitulo }}</p>
+
+<h2 class="mb-4"> Categorias</h2>
+
+<div class="row g-4" style="margin-bottom: 30px;">
+
+    {% for categoria in categorias %}
+
+        <div class="col-md-3">
+
+            <a href="{% url 'loja:produtos_categoria' categoria.id %}"
+
+            class="text-decoration-none">
+        
+                <div class="card">
+                    <div class="card-body text-center">
+                    {{ categoria }}
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    {% endfor %}
+
+</div>
+
+<div class="row g-4">
+    {% for produto in produtos %}
+
+    <div class="col-md-4">
+
+    {% include 'loja/partials/produto_card.html' %}
+
+    </div>
+
+    {% endfor %}
+</div>
+
+{% endblock %}

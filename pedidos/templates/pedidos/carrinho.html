@@ -1,0 +1,160 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h1 class="page-title mb-4">
+        Meu carrinho
+    </h1>
+
+    {% if produtos %}
+
+    <div class="row">
+
+        <!-- PRODUTOS -->
+        <div class="col-lg-8">
+
+            {% for item in produtos %}
+
+            <div class="card mb-3">
+
+                <div class="card-body">
+
+                    <div class="row align-items-center">
+
+                        <!-- IMAGEM -->
+                        <div class="col-md-2">
+
+                            {% if item.produto.imagem %}
+
+                            <img
+                                src="{{ item.produto.imagem.url }}"
+                                class="img-fluid rounded"
+                            >
+
+                            {% endif %}
+
+                        </div>
+
+                        <!-- PRODUTO -->
+                        <div class="col-md-4">
+
+                            <h5>
+                                {{ item.produto.nome }}
+                            </h5>
+
+                            <small class="text-muted">
+                                {{ item.produto.categoria }}
+                            </small>
+
+                        </div>
+
+                        <!-- QUANTIDADE -->
+                        <div class="col-md-2 text-center">
+
+                            <small class="d-block text-muted mb-2">
+                                Quantidade
+                            </small>
+
+                            <div class="d-inline-flex align-items-center border rounded">
+
+                                <a
+                                    href="{% url 'pedidos:remover_carrinho' item.produto.id %}"
+                                    class="btn btn-light btn-sm border-0"
+                                >
+                                    −
+                                </a>
+
+                                <span class="px-3 fw-bold">
+                                    {{ item.quantidade }}
+                                </span>
+
+                                <a
+                                    href="{% url 'pedidos:adicionar_carrinho' item.produto.id %}"
+                                    class="btn btn-light btn-sm border-0"
+                                >
+                                    +
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                        <!-- SUBTOTAL -->
+                        <div class="col-md-3 text-end">
+
+                            <small class="text-muted d-block">
+                                Subtotal
+                            </small>
+
+                            <div class="fs-5 fw-bold">
+                                R$ {{ item.subtotal|floatformat:2 }}
+                            </div>
+
+                            <a
+                                href="{% url 'pedidos:excluir_carrinho' item.produto.id %}"
+                                class="btn btn-danger btn-sm mt-2"
+                            >
+                                Remover
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- TOTAL -->
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <h4 class="mb-3">
+                        Total
+                    </h4>
+
+                    <h2 class="mb-4">
+                        R$ {{ total|floatformat:2 }}
+                    </h2>
+
+                    <form method="post" action="{% url 'pedidos:finalizar_pedido' %}">
+                        {% csrf_token %}
+
+                        <button
+                            type="submit" class="btn btn-success w-100" {% if not produtos %}disabled{% endif %}>
+                            Finalizar compra
+                        </button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <!-- CARRINHO VAZIO -->
+    <div class="alert alert-info">
+
+        Seu carrinho está vazio.
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
