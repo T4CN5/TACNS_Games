@@ -27,6 +27,7 @@ class Produto(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT)
     estoque = models.PositiveIntegerField(default=0)
     imagem = models.ImageField(upload_to='produtos/', blank=True, null=True)
+    ativo = models.BooleanField(default=True)
     data_cadastro = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
