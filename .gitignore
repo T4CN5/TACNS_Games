@@ -1,6 +1,18 @@
+# Ambiente Virtual
 venv/
-__**cache__/
+ENV/
+env/
+
+# Python (Arquivos compilados e cache)
+__pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+
+# Banco de dados local (SQLite)
 db.sqlite3
+
+# Arquivos de mídia e uploads locais (opcional, mas recomendado)
 media/
-**
+.gitignore

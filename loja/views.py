@@ -6,7 +6,7 @@ from .forms import ProdutoForm
 
 # --- INSTITUCIONAL ---
 def home(request):
-    produtos_do_banco = Produto.objects.all()[:4]
+    produtos_do_banco = Produto.objects.filter(ativo=True)[:4]
     categorias_principais = Categoria.objects.filter(pai__isnull=True)
     
     contexto = {
@@ -26,7 +26,7 @@ def contato(request):
 
 # --- CATÁLOGO & PRODUTOS ---
 def produtos(request):
-    produtos = Produto.objects.all()
+    produtos = Produto.objects.filter(ativo=True)
     categorias_principais = Categoria.objects.filter(pai__isnull=True)
     
     # 1. Captura a palavra digitada na barra (name="busca" no HTML)
