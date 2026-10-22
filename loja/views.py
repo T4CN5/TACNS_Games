@@ -6,7 +6,7 @@ from .forms import ProdutoForm
 
 # --- INSTITUCIONAL ---
 def home(request):
-    produtos_do_banco = Produto.objects.filter(ativo=True)[:4]
+    produtos_do_banco = Produto.objects.filter(ativo=True)[:6]
     categorias_principais = Categoria.objects.filter(pai__isnull=True)
     
     contexto = {
@@ -60,7 +60,10 @@ def produtos_categoria(request, id):
         
     # 2. O comando "__in" diz ao Django para procurar em toda a lista
     todas_categorias = obter_todas_categorias(categoria_obj)
-    produtos = Produto.objects.filter(categoria__in=todas_categorias)
+    
+    # CORREÇÃO: Adicionado o ativo=True aqui!
+    produtos = Produto.objects.filter(categoria__in=todas_categorias, ativo=True)
+    
     categorias_principais = Categoria.objects.filter(pai__isnull=True)
     
     contexto = {

@@ -1,11 +1,12 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-2">
     <div class="container">
 
         <!-- LOGO -->
-        <a class="navbar-brand fw-bold fs-4 d-flex align-items-center" href="{% url 'loja:home' %}">
-            <img src="{% static 'loja/images/logo_tacns.jpg' %}" alt="TACNS Games Logo" height="40" class="me-2 rounded">
-            TACNS Games
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'loja:home' %}">
+            <img src="{% static 'loja/images/logo_tacns.png' %}" 
+                 alt="TACNS Games Logo" 
+                 class="logo-gamer rounded">
         </a>
 
         <!-- BOTÃO PARA CELULAR -->
@@ -24,39 +25,41 @@
         <div class="collapse navbar-collapse" id="menuPrincipal">
 
             <!-- LINKS DA ESQUERDA -->
-            <ul class="navbar-nav me-auto align-items-lg-center gap-lg-2">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-3">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'loja:home' %}">Home</a>
+                    <!-- Verifica se está na Home (geralmente '/' ou rota home) -->
+                    <a class="nav-link {% if request.path == '/' or request.path == '/home/' %}active{% endif %}" href="{% url 'loja:home' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'loja:produtos' %}">Produtos</a>
+                    <!-- Verifica se a URL atual contém '/produtos/' -->
+                    <a class="nav-link {% if '/produtos/' in request.path %}active{% endif %}" href="{% url 'loja:produtos' %}">Produtos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'loja:sobre' %}">Sobre</a>
+                    <!-- Verifica se está em '/sobre/' -->
+                    <a class="nav-link {% if '/sobre/' in request.path %}active{% endif %}" href="{% url 'loja:sobre' %}">Sobre</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'loja:contato' %}">Contato</a>
+                    <!-- Verifica se está em '/contato/' -->
+                    <a class="nav-link {% if '/contato/' in request.path %}active{% endif %}" href="{% url 'loja:contato' %}">Contato</a>
                 </li>
             </ul>
 
             <!-- BARRA DE PESQUISA (CENTRO) -->
-            <form class="d-flex mx-lg-3 my-2 my-lg-0" action="{% url 'loja:produtos' %}" method="GET">
-                <input class="form-control me-2" type="search" name="busca" placeholder="Pesquisar jogos..." aria-label="Search">
-                <button class="btn btn-outline-light" type="submit">Buscar</button>
+            <form class="d-flex mx-lg-3 my-2 my-lg-0 align-items-center" action="{% url 'loja:produtos' %}" method="GET" style="min-width: 200px; max-width: 300px;">
+                <input class="form-control form-control-sm me-2" type="search" name="busca" placeholder="Pesquisar jogos..." aria-label="Search">
+                <button class="btn btn-sm btn-gamer-outline" type="submit">Buscar</button>
             </form>
 
             <!-- LINKS DA DIREITA (CARRINHO E CONTA) -->
-            <ul class="navbar-nav align-items-lg-center gap-lg-3">
+            <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center gap-lg-3 ms-auto">
                 
                 <li class="nav-item">
-                    <!-- text-nowrap impede que "Meus" e "Pedidos" fiquem em linhas separadas -->
                     <a class="nav-link text-white text-nowrap" href="{% url 'pedidos:meus_pedidos' %}">
                         Meus Pedidos
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <!-- d-flex e align-items-center alinham o texto e a bolinha do carrinho -->
                     <a class="nav-link text-white d-flex align-items-center gap-1 text-nowrap" href="{% url 'pedidos:carrinho' %}">
                         🛒 Carrinho
                         {% if quantidade_carrinho > 0 %}
@@ -69,11 +72,12 @@
 
                 {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-nowrap" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-white text-nowrap" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             👤 Olá, {{ user.first_name|default:user.username }}
                         </a>
-
                         <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'usuarios:perfil' %}">Meu Perfil</a></li>
+                            <li><hr class="dropdown-divider"></li>
                             {% if user.is_staff %}
                                 <li><h6 class="dropdown-header">Administração</h6></li>
                                 <li><a class="dropdown-item" href="/admin/">Painel administrativo</a></li>
@@ -90,8 +94,8 @@
                     </li>
                 {% else %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-nowrap" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Minha conta
+                        <a class="nav-link dropdown-toggle text-white text-nowrap" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            👤 Minha conta
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="{% url 'usuarios:login' %}">Entrar</a></li>

@@ -1,39 +1,63 @@
 {% extends "core/base.html" %}
 
 {% block content %}
-
 <div class="container py-5">
-
-    <div class="card usuario-card">
-
+    <div class="card usuario-card shadow-sm">
         <div class="card-body p-5">
-
-            <h1>
-                Minha conta
-            </h1>
-
+            <h1>Minha conta</h1>
             <hr>
 
-            <p>
-                <strong>Nome:</strong>
-                {{ user.first_name }}
-                {{ user.last_name }}
-            </p>
+            <div class="row">
+                <!-- Coluna de Dados Cadastrais -->
+                <div class="col-md-4 border-end">
+                    <h4 class="mb-3 text-secondary">Meus Dados</h4>
+                    <p>
+                        <strong>Nome:</strong> 
+                        {% if user.first_name %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}
+                    </p>
+                    <p><strong>Usuário:</strong> {{ user.username }}</p>
+                    <p><strong>E-mail:</strong> {{ user.email }}</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm mt-2">Editar Perfil</a>
+                </div>
 
-            <p>
-                <strong>Usuário:</strong>
-                {{ user.username }}
-            </p>
-
-            <p>
-                <strong>E-mail:</strong>
-                {{ user.email }}
-            </p>
+                <!-- Coluna do Histórico de Pedidos -->
+                <div class="col-md-8 ps-md-4">
+                    <h4 class="mb-3 text-secondary">Meus Últimos Pedidos</h4>
+                    
+                    {% if pedidos %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nº do Pedido</th>
+                                        <th>Data</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for pedido in pedidos %}
+                                    <tr>
+                                        <td>#{{ pedido.id }}</td>
+                                        <td>{{ pedido.data_criacao|date:"d/m/Y" }}</td>
+                                        <td>R$ {{ pedido.total }}</td>
+                                        <td>
+                                            <span class="badge bg-success">{{ pedido.get_status_display }}</span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-light text-center border">
+                            <p class="mb-0 text-muted">Você ainda não realizou nenhum pedido.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
 
         </div>
-
     </div>
-
 </div>
-
 {% endblock %}

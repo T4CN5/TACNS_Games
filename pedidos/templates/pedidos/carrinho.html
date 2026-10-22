@@ -1,160 +1,73 @@
 {% extends "core/base.html" %}
 
 {% block content %}
-
 <div class="container py-5">
-
-    <h1 class="page-title mb-4">
-        Meu carrinho
-    </h1>
+    <h1 class="page-title mb-4 text-white">Meu carrinho</h1>
 
     {% if produtos %}
-
     <div class="row">
-
-        <!-- PRODUTOS -->
         <div class="col-lg-8">
-
             {% for item in produtos %}
-
-            <div class="card mb-3">
-
+            <div class="card bg-dark border-secondary mb-3">
                 <div class="card-body">
-
                     <div class="row align-items-center">
-
-                        <!-- IMAGEM -->
                         <div class="col-md-2">
-
                             {% if item.produto.imagem %}
-
-                            <img
-                                src="{{ item.produto.imagem.url }}"
-                                class="img-fluid rounded"
-                            >
-
+                            <img src="{{ item.produto.imagem.url }}" class="img-fluid rounded border border-secondary">
                             {% endif %}
-
                         </div>
 
-                        <!-- PRODUTO -->
                         <div class="col-md-4">
-
-                            <h5>
-                                {{ item.produto.nome }}
-                            </h5>
-
-                            <small class="text-muted">
-                                {{ item.produto.categoria }}
-                            </small>
-
+                            <h5 class="text-white mb-1">{{ item.produto.nome }}</h5>
+                            {% if item.variacao %}
+                                <span class="badge bg-danger mb-2">Tamanho: {{ item.variacao.nome }}</span>
+                            {% endif %}
+                            <small class="text-muted d-block">{{ item.produto.categoria }}</small>
                         </div>
 
-                        <!-- QUANTIDADE -->
                         <div class="col-md-2 text-center">
-
-                            <small class="d-block text-muted mb-2">
-                                Quantidade
-                            </small>
-
-                            <div class="d-inline-flex align-items-center border rounded">
-
-                                <a
-                                    href="{% url 'pedidos:remover_carrinho' item.produto.id %}"
-                                    class="btn btn-light btn-sm border-0"
-                                >
-                                    −
-                                </a>
-
-                                <span class="px-3 fw-bold">
-                                    {{ item.quantidade }}
-                                </span>
-
-                                <a
-                                    href="{% url 'pedidos:adicionar_carrinho' item.produto.id %}"
-                                    class="btn btn-light btn-sm border-0"
-                                >
-                                    +
-                                </a>
-
+                            <small class="d-block text-muted mb-2">Quantidade</small>
+                            <div class="d-inline-flex align-items-center border border-secondary rounded p-1">
+                                <a href="{% url 'pedidos:remover_carrinho' item.chave %}" class="btn btn-outline-secondary btn-sm border-0 text-white">−</a>
+                                <span class="px-3 fw-bold text-white">{{ item.quantidade }}</span>
+                                <a href="{% url 'pedidos:somar_carrinho' item.chave %}" class="btn btn-outline-secondary btn-sm border-0 text-white">+</a>
                             </div>
-
                         </div>
 
-                        <!-- SUBTOTAL -->
                         <div class="col-md-3 text-end">
-
-                            <small class="text-muted d-block">
-                                Subtotal
-                            </small>
-
-                            <div class="fs-5 fw-bold">
-                                R$ {{ item.subtotal|floatformat:2 }}
-                            </div>
-
-                            <a
-                                href="{% url 'pedidos:excluir_carrinho' item.produto.id %}"
-                                class="btn btn-danger btn-sm mt-2"
-                            >
-                                Remover
-                            </a>
-
+                            <small class="text-muted d-block">Subtotal</small>
+                            <div class="fs-5 fw-bold text-primary">R$ {{ item.subtotal|floatformat:2 }}</div>
+                            <a href="{% url 'pedidos:excluir_carrinho' item.chave %}" class="btn btn-danger btn-sm mt-2">Remover</a>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
             {% endfor %}
-
         </div>
 
-
-        <!-- TOTAL -->
         <div class="col-lg-4">
-
-            <div class="card shadow-sm">
-
+            <div class="card shadow-sm bg-dark border-secondary">
                 <div class="card-body">
-
-                    <h4 class="mb-3">
-                        Total
-                    </h4>
-
-                    <h2 class="mb-4">
-                        R$ {{ total|floatformat:2 }}
-                    </h2>
-
+                    <h4 class="mb-3 text-white">Total</h4>
+                    <h2 class="mb-4 text-primary fw-bold">R$ {{ total|floatformat:2 }}</h2>
                     <form method="post" action="{% url 'pedidos:finalizar_pedido' %}">
                         {% csrf_token %}
-
-                        <button
-                            type="submit" class="btn btn-success w-100" {% if not produtos %}disabled{% endif %}>
+                        <button type="submit" class="btn btn-success btn-lg w-100 fw-bold text-uppercase" {% if not produtos %}disabled{% endif %}>
                             Finalizar compra
                         </button>
                     </form>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
     {% else %}
-
-    <!-- CARRINHO VAZIO -->
-    <div class="alert alert-info">
-
-        Seu carrinho está vazio.
-
+    <div class="alert alert-info bg-dark text-white border-secondary">
+        O seu carrinho está vazio.
     </div>
-
+    <div class="mt-3">
+        <a href="{% url 'loja:produtos' %}" class="btn btn-outline-light">Continuar a comprar</a>
+    </div>
     {% endif %}
-
 </div>
-
 {% endblock %}

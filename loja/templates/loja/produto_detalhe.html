@@ -55,25 +55,48 @@
                     {% endif %}
                 </div>
 
+                <!-- FORMULÁRIO DE COMPRA COM SELEÇÃO DE TAMANHO -->
+                <form action="{% url 'pedidos:adicionar_carrinho' produto.id %}" method="POST" class="mt-3">
+                    {% csrf_token %}
+                    
+                    {% if produto.variacoes.all %}
+                        <div class="mb-3">
+                            <label for="variacao" class="form-label text-white fw-bold">Escolha o Tamanho:</label>
+                            <select name="variacao_id" id="variacao" class="form-select bg-dark text-white border-secondary" required>
+                                <option value="" disabled selected>Selecione um tamanho...</option>
+                                {% for variacao in produto.variacoes.all %}
+                                    {% if variacao.estoque > 0 %}
+                                        <option value="{{ variacao.id }}">{{ variacao.nome }}</option>
+                                    {% else %}
+                                        <option value="{{ variacao.id }}" disabled>{{ variacao.nome }} (Esgotado)</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endif %}
+
+                    {% if produto.estoque > 0 %}
+                        <button type="submit" class="btn btn-success w-100 py-2 fw-bold text-uppercase mt-2">
+                            Adicionar ao carrinho
+                        </button>
+                    {% endif %}
+                </form>
+
                 <!-- FUNCIONALIDADE ADICIONADA: Painel de Controle para o ADM logado -->
                 {% if user.is_authenticated and user.is_staff %}
-                    <div class="mt-4 p-3 bg-light rounded border">
-                        <h5 class="text-muted mb-3 fs-6 fw-bold">Gerenciamento do Produto</h5>
-                        
-                        <!-- Botão de Editar -->
+                    <div class="mt-4 p-3 bg-dark rounded border border-secondary">
+                        <h5 class="text-muted mb-3 fs-6 fw-bold">⚙️ Gerenciamento do Produto</h5>
                         <a href="{% url 'loja:produto_editar' id=produto.id %}" class="btn btn-warning btn-sm me-2">
                             Editar Produto
                         </a>
-                        
-                        <!-- Botão de Excluir -->
                         <a href="{% url 'loja:produto_excluir' id=produto.id %}" class="btn btn-danger btn-sm">
                             Excluir Produto
                         </a>
                     </div>
                 {% endif %}
 
-                <div class="mt-5">
-                    <a href="{% url 'loja:produtos' %}" class="btn btn-outline-secondary btn-sm">
+                <div class="mt-4">
+                    <a href="{% url 'loja:produtos' %}" class="btn btn-outline-light btn-sm">
                         Voltar para Produtos
                     </a>
                 </div>

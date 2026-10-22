@@ -1,20 +1,30 @@
-/* Importar uma fonte moderna do Google (Poppins) */
+/* =========================================
+   1. GLOBAIS E TIPOGRAFIA
+   Configurações base de fonte, fundo e títulos
+   ========================================= */
+
+/* Importação da fonte Poppins do Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-/* Redefinir a fonte principal e o fundo da página */
+/* Estilos base da página (Dark Theme) */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #121212; /* Fundo cinzento muito escuro, quase preto */
-    color: #e0e0e0; /* Texto claro para leitura confortável */
+    background-color: #121212; /* Fundo principal escuro */
+    color: #e0e0e0; /* Texto claro padrão para contraste */
 }
 
-/* Ajuste da Barra de Navegação */
-.navbar {
-    background-color: #141414 !important; /* Cinzento muito escuro para os detalhes */
-    border-bottom: 3px solid #8B0000; /* Vermelho escuro profundo */
+/* Títulos gerais do sistema */
+h1, h2, h3, h4, h5 {
+    color: #ffffff;
+    font-weight: 700;
 }
 
-/* Alterar a cor das badges (como a bolinha do carrinho) para combinar */
+/* =========================================
+   2. IDENTIDADE VISUAL E CORES GERAIS
+   Cores da marca TACNS Games (Vermelho Escuro)
+   ========================================= */
+
+/* Sobrescreve as cores primárias do Bootstrap para o vermelho da loja */
 .bg-primary {
     background-color: #8B0000 !important;
 }
@@ -23,81 +33,280 @@ body {
     color: #8B0000 !important;
 }
 
-/* Ajuste dos Títulos Gerais */
-h1, h2, h3, h4, h5 {
-    color: #ffffff;
+/* =========================================
+   3. BARRA DE NAVEGAÇÃO (HEADER)
+   Logotipo, Menu Dropdown, Links e Barra de Busca
+   ========================================= */
+
+/* Estrutura principal da Navbar */
+.navbar {
+    background-color: #141414 !important; /* Tom um pouco mais claro que o fundo */
+    border-bottom: 3px solid #8B0000; /* Linha de destaque vermelha inferior */
+}
+
+/* Alinhamento vertical centralizado dos itens da barra */
+.navbar-collapse, 
+.navbar .container {
+    align-items: center !important;
+}
+
+/* --- Links da Navbar --- */
+.navbar-nav .nav-link {
+    color: #e0e0e0 !important;
+    font-weight: 500;
+    transition: color 0.25s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #8B0000 !important; /* Muda para vermelho ao passar o mouse */
+}
+
+.navbar-nav .nav-link.active {
+    color: #ff1a1a !important; /* Vermelho mais vivo para indicar a página atual */
     font-weight: 700;
 }
 
-/* Ajuste dos Cartões de Produto para o Dark Mode */
+/* --- Logotipo TACNS Games --- */
+.logo-gamer {
+    height: 100px;
+    width: auto;
+    object-fit: contain;
+    padding: 6px;
+    border-radius: 50%; 
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%); /* Luz de fundo */
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.70)) 
+            drop-shadow(0 0 10px rgba(139, 0, 0, 0.8)); /* Sombras brilhantes (Glow) */
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logo-gamer:hover {
+    transform: scale(1.05); /* Pequeno zoom ao passar o mouse */
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.85)) 
+            drop-shadow(0 0 16px rgba(255, 0, 0, 0.95)) !important; /* Intensifica o brilho */
+}
+
+/* --- Menu Dropdown (Categorias do Header) --- */
+.navbar .dropdown-menu {
+    background-color: #1e1e1e !important;
+    border: 1px solid #333333 !important;
+}
+
+.navbar .dropdown-item {
+    color: #e0e0e0 !important;
+}
+
+.navbar .dropdown-item:hover {
+    background-color: #2a2a2a !important;
+    color: #ffffff !important;
+}
+
+.navbar .dropdown-header {
+    color: #8B0000 !important;
+    font-weight: 600;
+}
+
+.navbar .dropdown-divider {
+    border-top: 1px solid #333333 !important;
+}
+
+/* --- Barra de Busca --- */
+.navbar .form-control {
+    background-color: #1e1e1e !important;
+    border: 1px solid #333333 !important;
+    color: #ffffff !important;
+    transition: all 0.3s ease;
+}
+
+.navbar .form-control::placeholder {
+    color: #777777;
+}
+
+.navbar .form-control:focus {
+    background-color: #252525 !important;
+    border-color: #8B0000 !important;
+    box-shadow: 0 0 10px rgba(139, 0, 0, 0.5) !important; /* Brilho vermelho ao digitar */
+}
+
+/* =========================================
+   4. MENU LATERAL (FILTRO DE CATEGORIAS)
+   Estilos do painel esquerdo na página de produtos
+   ========================================= */
+
+/* Cabeçalho do painel de filtros */
+.card-header {
+    background-color: #141414 !important;
+    border-bottom: 2px solid #8B0000 !important;
+}
+
+/* Itens da lista de categorias */
+.list-group-item {
+    background-color: #1e1e1e !important;
+    color: #e0e0e0 !important;
+    border-color: #333333 !important;
+}
+
+.list-group-item-action:hover, 
+.list-group-item-action:focus {
+    background-color: #2a2a2a !important;
+    color: #ffffff !important;
+}
+
+/* =========================================
+   5. CARTÕES DE PRODUTO (VITRINE)
+   Estrutura, imagens, textos e botões dos cards
+   ========================================= */
+
+/* Estrutura base do cartão */
 .card {
     background-color: #1e1e1e;
     border: none;
     border-radius: 10px;
-    transition: transform 0.2s ease-in-out; /* Animação suave */
+    color: #e0e0e0 !important;
+    transition: transform 0.2s ease-in-out;
 }
 
-/* Efeito ao passar o mouse (hover) nos cartões */
 .card:hover {
-    transform: translateY(-5px); /* O cartão "sobe" ligeiramente */
+    transform: translateY(-5px); /* Efeito de levitação */
     box-shadow: 0 10px 20px rgba(0,0,0,0.5);
 }
 
-/* Textos dentro dos cartões */
+/* Textos e links dentro dos cartões */
 .card .text-muted {
     color: #a0a0a0 !important;
 }
 
-/* Forçar texto claro dentro dos cartões para contraste com o fundo escuro */
-.card, 
-.card-body, 
-.card-title, 
-.card-text {
+.card-body, .card-title, .card-text {
     color: #e0e0e0 !important;
 }
 
-/* Deixar os links dos títulos dos jogos brancos também */
 .card a {
     color: #ffffff !important;
     text-decoration: none;
 }
 
 .card a:hover {
-    color: #8B0000 !important; /* Fica vermelho ao passar o rato */
+    color: #8B0000 !important;
 }
 
-/* =========================================
-   MENU LATERAL DE CATEGORIAS (FILTRO)
-   ========================================= */
-
-/* Fundo e texto dos itens da lista */
-.list-group-item {
-    background-color: #1e1e1e !important; /* Mesmo fundo escuro dos cartões */
-    color: #e0e0e0 !important; /* Texto claro para leitura */
-    border-color: #333333 !important; /* Bordas mais subtis e escuras */
+/* --- Tratamento das Imagens dos Produtos --- */
+.card-img-container {
+    position: relative;
+    overflow: hidden;
+    background-color: #141414;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
-/* Efeito ao passar o rato (hover) nas categorias */
-.list-group-item-action:hover, 
-.list-group-item-action:focus {
-    background-color: #2a2a2a !important; /* Fica ligeiramente mais claro */
-    color: #ffffff !important; /* Texto fica branco puro */
-}
-
-/* Ajustar o cabeçalho do filtro ("Categorias") para combinar com a navbar */
-.card-header {
-    background-color: #141414 !important;
-    border-bottom: 2px solid #8B0000 !important; /* Linha com o vermelho da TACNS Games */
-}
-
-/* =========================================
-   PADRONIZAÇÃO DAS IMAGENS DOS PRODUTOS
-   ========================================= */
-
+/* Padronização de tamanho (280px) para qualquer imagem de produto */
+.produto-imagem, 
 .card-img-top {
-    height: 280px; /* Define uma altura fixa igual para todas as imagens */
-    object-fit: cover; /* Faz a imagem preencher o espaço sem a distorcer (corta ligeiramente os excessos) */
-    object-position: top; /* Foca no topo da imagem para não cortar as faixas da PS5 ou Xbox */
-    background-color: #141414; /* Fundo escuro de segurança para imagens com fundo transparente */
-    border-bottom: 1px solid #333333; /* Uma linha subtil a separar a imagem do texto */
+    height: 280px;
+    object-fit: cover;
+    object-position: top;
+    background-color: #141414;
+    border-bottom: 2px solid #2a2a2a;
+    filter: brightness(0.9) contrast(1.05); /* Visual ligeiramente cinematográfico */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s ease, border-color 0.3s ease;
+}
+
+/* Animação na imagem ao passar o mouse no cartão */
+.produto-card:hover .produto-imagem {
+    transform: scale(1.05);
+    filter: brightness(1.05) contrast(1.1);
+    border-bottom-color: #8B0000;
+}
+
+/* --- Etiquetas (Badges) nos Cartões --- */
+.card-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(20, 20, 20, 0.85);
+    border: 1px solid #8B0000;
+    color: #ffffff;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+}
+
+/* Badges de Status (Disponível/Esgotado) */
+.badge-gamer-success {
+    background-color: rgba(25, 135, 84, 0.15) !important;
+    color: #1f9d55 !important;
+    border: 1px solid #1f9d55;
+    box-shadow: 0 0 8px rgba(31, 157, 85, 0.3);
+    font-weight: 600;
+}
+
+.badge-gamer-danger {
+    background-color: rgba(139, 0, 0, 0.15) !important;
+    color: #ff3333 !important;
+    border: 1px solid #8B0000;
+    box-shadow: 0 0 8px rgba(139, 0, 0, 0.3);
+    font-weight: 600;
+}
+
+/* --- Botões de Ação Gamers --- */
+.btn-gamer-primary {
+    background-color: #8B0000 !important;
+    color: #ffffff !important;
+    border: 1px solid #ff1a1a !important;
+    border-radius: 6px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.4);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.btn-gamer-primary:hover {
+    background-color: #b30000 !important;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.75);
+    transform: translateY(-2px);
+    color: #ffffff !important;
+}
+
+.btn-gamer-outline {
+    background-color: transparent !important;
+    color: #e0e0e0 !important;
+    border: 1px solid #333333 !important;
+    border-radius: 6px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.btn-gamer-outline:hover {
+    border-color: #8B0000 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   6. CUSTOMIZAÇÃO DO NAVEGADOR
+   Barra de rolagem (Scrollbar) temática
+   ========================================= */
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: #121212;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #121212;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #252525;
+    border-radius: 5px;
+    border: 2px solid #121212;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #8B0000;
 }

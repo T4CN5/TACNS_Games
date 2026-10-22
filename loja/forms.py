@@ -4,12 +4,11 @@ from .models import Produto
 class ProdutoForm(forms.ModelForm):
     class Meta:
         model = Produto
-        # Adicionados os novos campos na lista
+        # Removido o 'tamanho' da lista de fields
         fields = [
             'nome', 'descricao', 'preco', 'categoria', 'estoque', 
-            'imagem', 'ativo', 'plataforma', 'digital', 'tamanho'
+            'imagem', 'ativo', 'plataforma', 'digital'
         ]
-        # CORREÇÃO: Mudado de 'widget' para 'widgets'
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'form-control'}),
             'descricao': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
@@ -18,8 +17,6 @@ class ProdutoForm(forms.ModelForm):
             'estoque': forms.NumberInput(attrs={'class': 'form-control'}),
             'imagem': forms.FileInput(attrs={'class': 'form-control'}),
             'ativo': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-            # Configuração dos novos campos
             'plataforma': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ex: PC, PS5, Retro'}),
             'digital': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-            'tamanho': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ex: P, M, G, GG'}),
         }
