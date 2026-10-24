@@ -1,64 +1,50 @@
 {% extends 'core/base.html' %}
-{% load static %} <!-- Carrega os arquivos estáticos no topo -->
+{% load static %}
 
-{% block title %}
-{{ produto.nome }} | TACNS Games
-{% endblock %}
+{% block title %} {{ produto.nome }} | TACNS Games {% endblock %}
 
 {% block content %}
-
 {% if produto %}
-
     <div class="container my-5">
         <div class="row">
-            <!-- Coluna da Imagem -->
+            <!-- COLUNA DA IMAGEM -->
             <div class="col-md-6 mb-4">
-                <!-- CORREÇÃO: Centralizado o carregamento da imagem usando a lógica padrão do seu banco -->
                 {% if produto.imagem %}
-                    <img src="{{ produto.imagem.url }}" 
-                         class="img-fluid rounded shadow-sm" 
-                         alt="{{ produto.nome }}"
-                         style="max-height: 400px; object-fit: contain; width: 100%;">
+                    <img src="{{ produto.imagem.url }}" class="img-fluid rounded border border-secondary bg-dark p-2 w-100" style="max-height: 500px; object-fit: contain;" alt="{{ produto.nome }}">
                 {% else %}
-                    <img src="{% static 'core/images/009018IDA2.avif' %}" 
-                         class="img-fluid rounded shadow-sm" 
-                         alt="Imagem não disponível"
-                         style="max-height: 400px; object-fit: contain; width: 100%;">
+                    <div class="w-100 bg-secondary d-flex align-items-center justify-content-center rounded" style="height: 500px;">
+                        <span class="text-light">Sem imagem</span>
+                    </div>
                 {% endif %}
             </div>
 
-            <!-- Coluna das Informações -->
-            <div class="col-md-6">
-                <h1 class="fw-bold mb-2">{{ produto.nome }}</h1>
-
-                <span class="badge bg-secondary mb-3 fs-6">
-                    {{ produto.categoria }}
-                </span>
-
-                <h3 class="text-primary fw-bold mb-4">
-                    R$ {{ produto.preco|floatformat:2 }}
-                </h3>
-
-                <p class="lead mb-4">
-                    {{ produto.descricao }}
-                </p>
-
-                <div class="mb-4">
-                    {% if produto.estoque > 0 %}
-                        <span class="badge bg-success">
-                            Disponível
-                        </span>
-                    {% else %}
-                        <span class="badge bg-danger">
-                            Esgotado
-                        </span>
+            <!-- COLUNA DAS INFORMAÇÕES -->
+            <div class="col-md-6 text-white produto-info-container">
+                
+                <!-- TÍTULO E BOTÃO WISHLIST NA MESMA LINHA -->
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h1 class="fw-bold m-0">{{ produto.nome }}</h1>
+                    
+                    <!-- Lógica do Coração da Wishlist -->
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'loja:toggle_wishlist' produto.id %}" class="btn btn-outline-danger border-0 fs-4 p-0 ms-3" title="Lista de Desejos">
+                            {% if na_wishlist %}
+                                <i class="bi bi-heart-fill"></i> <!-- Coração Cheio se já estiver guardado -->
+                            {% else %}
+                                <i class="bi bi-heart"></i> <!-- Coração Vazio se não estiver -->
+                            {% endif %}
+                        </a>
                     {% endif %}
                 </div>
 
-                <!-- FORMULÁRIO DE COMPRA COM SELEÇÃO DE TAMANHO -->
+                <span class="badge bg-secondary mb-3 fs-6">{{ produto.categoria.nome }}</span>
+                <h3 class="text-primary fw-bold mb-4">R$ {{ produto.preco|floatformat:2 }}</h3>
+                <p class="lead mb-4 text-muted">{{ produto.descricao }}</p>
+
+                <!-- ... (Mantenha o seu formulário de carrinho e botões administrativos aqui) ... -->
+                
                 <form action="{% url 'pedidos:adicionar_carrinho' produto.id %}" method="POST" class="mt-3">
                     {% csrf_token %}
-                    
                     {% if produto.variacoes.all %}
                         <div class="mb-3">
                             <label for="variacao" class="form-label text-white fw-bold">Escolha o Tamanho:</label>
@@ -76,44 +62,93 @@
                     {% endif %}
 
                     {% if produto.estoque > 0 %}
-                        <button type="submit" class="btn btn-success w-100 py-2 fw-bold text-uppercase mt-2">
+                        <button type="submit" class="btn btn-gamer-primary w-100 py-2 fw-bold text-uppercase mt-2">
                             Adicionar ao carrinho
                         </button>
+                    {% else %}
+                        <button type="button" class="btn btn-secondary w-100 py-2 fw-bold mt-2" disabled>Esgotado</button>
                     {% endif %}
                 </form>
 
-                <!-- FUNCIONALIDADE ADICIONADA: Painel de Controle para o ADM logado -->
-                {% if user.is_authenticated and user.is_staff %}
-                    <div class="mt-4 p-3 bg-dark rounded border border-secondary">
-                        <h5 class="text-muted mb-3 fs-6 fw-bold">⚙️ Gerenciamento do Produto</h5>
-                        <a href="{% url 'loja:produto_editar' id=produto.id %}" class="btn btn-warning btn-sm me-2">
-                            Editar Produto
-                        </a>
-                        <a href="{% url 'loja:produto_excluir' id=produto.id %}" class="btn btn-danger btn-sm">
-                            Excluir Produto
-                        </a>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- NOVA SECÇÃO: AVALIAÇÕES E ESTRELAS         -->
+        <!-- ========================================== -->
+        <hr class="border-secondary my-5">
+        
+        <div class="row">
+            <div class="col-md-12 text-white">
+                <h3 class="mb-4">Avaliações do Produto</h3>
+                
+                <!-- FORMULÁRIO DE AVALIAÇÃO (Apenas para utilizadores logados) -->
+                {% if user.is_authenticated %}
+                    <div class="card bg-dark border-secondary mb-5">
+                        <div class="card-body">
+                            <h5 class="card-title">Deixe a sua avaliação</h5>
+                            <form action="{% url 'loja:adicionar_avaliacao' produto.id %}" method="POST">
+                                {% csrf_token %}
+                                
+                                <div class="mb-3">
+                                    <label class="form-label text-muted">Nota (1 a 5 estrelas)</label>
+                                    <select name="nota" class="form-select bg-dark text-white border-secondary w-25" required>
+                                        <option value="5">⭐⭐⭐⭐⭐ (5) Excelente</option>
+                                        <option value="4">⭐⭐⭐⭐ (4) Muito Bom</option>
+                                        <option value="3">⭐⭐⭐ (3) Bom</option>
+                                        <option value="2">⭐⭐ (2) Regular</option>
+                                        <option value="1">⭐ (1) Mau</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label text-muted">Comentário (Opcional)</label>
+                                    <textarea name="comentario" class="form-control bg-dark text-white border-secondary" rows="3" placeholder="O que achou deste produto?"></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-gamer-primary">Publicar Avaliação</button>
+                            </form>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info bg-dark border-secondary text-white">
+                        Inicie sessão para avaliar este produto.
                     </div>
                 {% endif %}
 
-                <div class="mt-4">
-                    <a href="{% url 'loja:produtos' %}" class="btn btn-outline-light btn-sm">
-                        Voltar para Produtos
-                    </a>
+                <!-- LISTA DE AVALIAÇÕES EXISTENTES -->
+                <div class="avaliacoes-lista">
+                    {% for avaliacao in avaliacoes %}
+                        <div class="card bg-dark border-secondary mb-3">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <strong class="text-primary">{{ avaliacao.usuario.username }}</strong>
+                                    <small class="text-muted">{{ avaliacao.data_criacao|date:"d/m/Y" }}</small>
+                                </div>
+                                
+                                <!-- Renderiza o número de estrelas baseado na nota -->
+                                <div class="text-warning my-2 fs-5">
+                                    {% for i in "12345"|make_list %}
+                                        {% if forloop.counter <= avaliacao.nota %}
+                                            <i class="bi bi-star-fill"></i>
+                                        {% else %}
+                                            <i class="bi bi-star"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                
+                                {% if avaliacao.comentario %}
+                                    <p class="card-text text-light m-0">{{ avaliacao.comentario }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p class="text-muted">Ainda não há avaliações para este produto. Seja o primeiro a avaliar!</p>
+                    {% endfor %}
                 </div>
+                
             </div>
         </div>
     </div>
-
-{% else %}
-
-    <div class="alert alert-danger my-5">
-        Produto não encontrado.
-    </div>
-
-    <a href="{% url 'loja:produtos' %}" class="btn btn-secondary">
-        Voltar para Produtos
-    </a>
-
 {% endif %}
-
 {% endblock %}

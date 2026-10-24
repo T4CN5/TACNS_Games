@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+
+{% block title %} {{ titulo }} | TACNS Games {% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="d-flex align-items-center mb-4">
+        <i class="bi bi-heart-fill text-danger fs-1 me-3"></i>
+        <h1 class="text-white m-0">{{ titulo }}</h1>
+    </div>
+
+    {% if itens %}
+        <div class="row g-4">
+            <!-- Loop através dos itens da Wishlist -->
+            {% for item in itens %}
+                <div class="col-md-3">
+                    <!-- O 'with' permite passar o produto que está dentro do item da wishlist para o cartão genérico -->
+                    {% include 'loja/partials/produto_card.html' with produto=item.produto %}
+                    
+                    <!-- Botão Extra para remover diretamente da Wishlist -->
+                    <div class="mt-2 text-center">
+                        <a href="{% url 'loja:toggle_wishlist' item.produto.id %}" class="text-danger text-decoration-none small">
+                            <i class="bi bi-trash"></i> Remover da lista
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info bg-dark border-secondary text-white mt-4">
+            A sua lista de desejos está vazia. <a href="{% url 'loja:produtos' %}" class="text-primary fw-bold">Explore a nossa loja</a> e guarde os seus favoritos!
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

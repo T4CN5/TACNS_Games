@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Produto, Categoria
+# ATUALIZAÇÃO 1: Importamos os novos modelos Avaliacao e ListaDesejo
+from .models import Produto, Categoria, Avaliacao, ListaDesejo
 from .forms import ProdutoForm
 
 # --- INSTITUCIONAL ---
@@ -74,9 +75,24 @@ def produtos_categoria(request, id):
     }
     return render(request, "loja/produtos.html", contexto)
 
+#  A view de detalhe agora envia as avaliações e checa a Wishlist
 def produto_detalhe(request, id):
     produto = get_object_or_404(Produto, id=id)
-    return render(request, "loja/produto_detalhe.html", {"produto": produto})
+    
+    # Busca todas as avaliações deste produto específico
+    avaliacoes = produto.avaliacoes.all()
+    na_wishlist = False
+    
+    # Só verifica se está na wishlist se o cliente tiver feito login (evita erros com usuários anónimos)
+    if request.user.is_authenticated:
+        na_wishlist = ListaDesejo.objects.filter(usuario=request.user, produto=produto).exists()
+        
+    contexto = {
+        "produto": produto,
+        "avaliacoes": avaliacoes,    # Enviamos as avaliações para o HTML
+        "na_wishlist": na_wishlist   # Enviamos um Booleano (True/False) para pintar o coração de vermelho ou não
+    }
+    return render(request, "loja/produto_detalhe.html", contexto)
 
 def produtos_esgotados(request):
     produtos = Produto.objects.filter(estoque=0)
@@ -117,3 +133,61 @@ def produto_excluir(request, id):
         messages.success(request, "Produto excluído com sucesso!")
         return redirect("loja:produtos")
     return render(request, "loja/produto_confirmar_exclusao.html", {"produto": produto})
+
+
+# ==========================================
+# NOVAS VIEWS: WISHLIST E AVALIAÇÕES
+# ==========================================
+
+@login_required
+def toggle_wishlist(request, produto_id):
+    """
+    Função 'Toggle' (Alternar): Se o produto não estiver na wishlist, adiciona.
+    Se já estiver, remove. Funciona como um interruptor liga/desliga.
+    """
+    produto = get_object_or_404(Produto, id=produto_id)
+    
+    # get_or_create tenta encontrar o registo. Se não encontrar, cria-o.
+    # Retorna o objeto (item) e um Booleano (created) que diz se foi acabado de criar.
+    item, created = ListaDesejo.objects.get_or_create(usuario=request.user, produto=produto)
+    
+    if not created:
+        # Se NÃO foi criado (já existia), então o cliente quer remover o coração.
+        item.delete()
+        messages.info(request, f"{produto.nome} removido da lista de desejos.")
+    else:
+        # Se FOI criado, avisa que deu sucesso.
+        messages.success(request, f"{produto.nome} guardado na lista de desejos!")
+        
+    # Redireciona de volta para a EXATA página onde o cliente clicou (seja a vitrine ou o detalhe)
+    return redirect(request.META.get('HTTP_REFERER', 'loja:produtos'))
+
+@login_required
+def wishlist(request):
+    """ Exibe todos os itens guardados pelo utilizador logado. """
+    # select_related otimiza a busca na base de dados (traz a wishlist e o produto na mesma query)
+    itens = ListaDesejo.objects.filter(usuario=request.user).select_related('produto')
+    return render(request, 'loja/wishlist.html', {'itens': itens, 'titulo': 'Minha Lista de Desejos'})
+
+@login_required
+def adicionar_avaliacao(request, produto_id):
+    """ Recebe o POST do formulário de estrelas na página de detalhes. """
+    produto = get_object_or_404(Produto, id=produto_id)
+    
+    if request.method == 'POST':
+        # Captura os dados do formulário HTML
+        nota = request.POST.get('nota')
+        comentario = request.POST.get('comentario')
+        
+        if nota:
+            # Cria a avaliação no banco ligando ao produto e ao cliente
+            Avaliacao.objects.create(
+                produto=produto,
+                usuario=request.user,
+                nota=int(nota),
+                comentario=comentario
+            )
+            messages.success(request, "Obrigado! A sua avaliação foi publicada.")
+            
+    # Redireciona de volta para ver a avaliação recém-criada
+    return redirect('loja:produto_detalhe', id=produto.id)

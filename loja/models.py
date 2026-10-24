@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User # Adicionado
+from django.core.validators import MinValueValidator, MaxValueValidator # Adicionado
 
 class Categoria(models.Model):
     nome = models.CharField(max_length=100)
@@ -37,3 +39,27 @@ class Variacao(models.Model):
 
     def __str__(self):
         return f"{self.produto.nome} - {self.nome}"
+
+class Avaliacao(models.Model):
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE, related_name='avaliacoes')
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    nota = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    comentario = models.TextField(blank=True, null=True)
+    data_criacao = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-data_criacao']
+
+    def __str__(self):
+        return f"{self.usuario.username} - {self.produto.nome} ({self.nota}/5)"
+
+class ListaDesejo(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lista_desejos')
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    data_adicao = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('usuario', 'produto') # Evita produtos duplicados na lista do mesmo utilizador
+
+    def __str__(self):
+        return f"Wishlist de {self.usuario.username} - {self.produto.nome}"        

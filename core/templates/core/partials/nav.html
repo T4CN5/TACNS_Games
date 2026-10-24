@@ -27,19 +27,15 @@
             <!-- LINKS DA ESQUERDA -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-3">
                 <li class="nav-item">
-                    <!-- Verifica se está na Home (geralmente '/' ou rota home) -->
                     <a class="nav-link {% if request.path == '/' or request.path == '/home/' %}active{% endif %}" href="{% url 'loja:home' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <!-- Verifica se a URL atual contém '/produtos/' -->
                     <a class="nav-link {% if '/produtos/' in request.path %}active{% endif %}" href="{% url 'loja:produtos' %}">Produtos</a>
                 </li>
                 <li class="nav-item">
-                    <!-- Verifica se está em '/sobre/' -->
                     <a class="nav-link {% if '/sobre/' in request.path %}active{% endif %}" href="{% url 'loja:sobre' %}">Sobre</a>
                 </li>
                 <li class="nav-item">
-                    <!-- Verifica se está em '/contato/' -->
                     <a class="nav-link {% if '/contato/' in request.path %}active{% endif %}" href="{% url 'loja:contato' %}">Contato</a>
                 </li>
             </ul>
@@ -50,8 +46,15 @@
                 <button class="btn btn-sm btn-gamer-outline" type="submit">Buscar</button>
             </form>
 
-            <!-- LINKS DA DIREITA (CARRINHO E CONTA) -->
+            <!-- LINKS DA DIREITA (FAVORITOS, PEDIDOS, CARRINHO E CONTA) -->
             <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center gap-lg-3 ms-auto">
+                
+                <!-- FAVORITOS ADICIONADO AQUI -->
+                <li class="nav-item">
+                    <a class="nav-link text-white text-nowrap" href="{% url 'loja:wishlist' %}">
+                        <i class="bi bi-heart text-danger"></i> Favoritos
+                    </a>
+                </li>
                 
                 <li class="nav-item">
                     <a class="nav-link text-white text-nowrap" href="{% url 'pedidos:meus_pedidos' %}">

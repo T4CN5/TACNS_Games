@@ -1,14 +1,63 @@
-<footer class="bg-dark text-white mt-5 p-4">
-
-    <div class="container text-center">
-
-        <p>
-            © 2026 TACNS Games
-        </p>
-            By TACNS
-        <p>
-	        </p>
-
+{% load static %}
+<!-- mt-4 (espaço acima) e pt-4 pb-2 (espaços internos) reduzidos para encolher o rodapé -->
+<footer class="bg-dark text-white mt-4 pt-4 pb-2 border-top border-secondary">
+    <div class="container">
+        
+        <div class="row text-center text-md-start">
+            
+            <!-- COLUNA 1: Esquerda -->
+            <div class="col-md-4 mb-3">
+                <!-- Logótipo reduzido de 70px para 50px -->
+                <a href="{% url 'loja:home' %}" class="d-inline-block mb-2">
+                    <img src="{% static 'loja/images/logo_tacns.png' %}" alt="TACNS Games Logo" style="max-height: 50px;" class="rounded">
+                </a>
+                <p class="texto-glow-vermelho mx-auto mx-md-0 mb-0" style="max-width: 300px; font-size: 0.8rem;">
+                    A sua base definitiva para as melhores chaves de jogos, vestuário gamer e consolas da nova geração.
+                </p>
+            </div>
+            
+            <!-- COLUNA 2: Centro -->
+            <div class="col-md-4 mb-3 text-center">
+                <h6 class="texto-glow-vermelho fw-bold mb-2 text-uppercase">Links Úteis</h6>
+                <!-- Espaçamento entre os links reduzido (mb-1) e fonte um pouco menor -->
+                <ul class="list-unstyled mb-0" style="font-size: 0.85rem;">
+                    <li class="mb-1"><a href="{% url 'loja:produtos' %}" class="text-white text-decoration-none">Ver Catálogo</a></li>
+                    <li class="mb-1"><a href="{% url 'loja:sobre' %}" class="text-white text-decoration-none">Sobre a TACNS</a></li>
+                    <li class="mb-1"><a href="{% url 'loja:contato' %}" class="text-white text-decoration-none">Apoio ao Cliente</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">Termos de Serviço</a></li>
+                </ul>
+            </div>
+            
+            <!-- COLUNA 3: Direita -->
+            <div class="col-md-4 mb-3 text-center text-md-end">
+                <h6 class="texto-glow-vermelho fw-bold mb-2 text-uppercase">Siga-nos</h6>
+                <div class="d-flex gap-2 justify-content-center justify-content-md-end">
+                    <!-- Botões sociais encolhidos de 40px para 35px -->
+                    <a href="#" target="_blank" class="btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center p-0" style="width: 35px; height: 35px;" title="Instagram">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="#" target="_blank" class="btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center p-0" style="width: 35px; height: 35px;" title="Discord">
+                        <i class="bi bi-discord"></i>
+                    </a>
+                    <a href="#" target="_blank" class="btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center p-0" style="width: 35px; height: 35px;" title="YouTube">
+                        <i class="bi bi-youtube"></i>
+                    </a>
+                    <a href="#" target="_blank" class="btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center p-0" style="width: 35px; height: 35px;" title="X (Twitter)">
+                        <i class="bi bi-twitter-x"></i>
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Margens da linha divisória reduzidas -->
+        <hr class="border-secondary mt-1 mb-2">
+        
+        <!-- COPYRIGHT (Direitos e CNPJ agora partilham a mesma linha) -->
+        <div class="text-center texto-glow-vermelho d-flex flex-column gap-0" style="font-size: 0.75rem;">
+            <span>&copy; 2026 TACNS Games. Todos os direitos reservados. | CNPJ: 52.492.323/0001-43</span>
+            <span>Desenvolvido por Thiago Costa Neto</span>
+        </div>
+        
     </div>
-
 </footer>

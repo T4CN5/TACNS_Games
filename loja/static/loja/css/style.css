@@ -1,30 +1,26 @@
-/* =========================================
+/* =========================================================
    1. GLOBAIS E TIPOGRAFIA
-   Configurações base de fonte, fundo e títulos
-   ========================================= */
+   Configurações base de fonte, fundo escuro e títulos
+   ========================================================= */
 
-/* Importação da fonte Poppins do Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-/* Estilos base da página (Dark Theme) */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #121212; /* Fundo principal escuro */
-    color: #e0e0e0; /* Texto claro padrão para contraste */
+    background-color: #121212; 
+    color: #e0e0e0; 
 }
 
-/* Títulos gerais do sistema */
 h1, h2, h3, h4, h5 {
     color: #ffffff;
     font-weight: 700;
 }
 
-/* =========================================
+/* =========================================================
    2. IDENTIDADE VISUAL E CORES GERAIS
-   Cores da marca TACNS Games (Vermelho Escuro)
-   ========================================= */
+   Substituição das cores padrão do Bootstrap pelo Vermelho TACNS
+   ========================================================= */
 
-/* Sobrescreve as cores primárias do Bootstrap para o vermelho da loja */
 .bg-primary {
     background-color: #8B0000 !important;
 }
@@ -33,24 +29,22 @@ h1, h2, h3, h4, h5 {
     color: #8B0000 !important;
 }
 
-/* =========================================
+/* =========================================================
    3. BARRA DE NAVEGAÇÃO (HEADER)
-   Logotipo, Menu Dropdown, Links e Barra de Busca
-   ========================================= */
+   ========================================================= */
 
-/* Estrutura principal da Navbar */
+/* Fundo da navbar e linha vermelha inferior */
 .navbar {
-    background-color: #141414 !important; /* Tom um pouco mais claro que o fundo */
-    border-bottom: 3px solid #8B0000; /* Linha de destaque vermelha inferior */
+    background-color: #141414 !important; 
+    border-bottom: 3px solid #8B0000; 
 }
 
-/* Alinhamento vertical centralizado dos itens da barra */
 .navbar-collapse, 
 .navbar .container {
     align-items: center !important;
 }
 
-/* --- Links da Navbar --- */
+/* Links do Menu Principal */
 .navbar-nav .nav-link {
     color: #e0e0e0 !important;
     font-weight: 500;
@@ -58,34 +52,34 @@ h1, h2, h3, h4, h5 {
 }
 
 .navbar-nav .nav-link:hover {
-    color: #8B0000 !important; /* Muda para vermelho ao passar o mouse */
+    color: #8B0000 !important; 
 }
 
 .navbar-nav .nav-link.active {
-    color: #ff1a1a !important; /* Vermelho mais vivo para indicar a página atual */
+    color: #ff1a1a !important; 
     font-weight: 700;
 }
 
-/* --- Logotipo TACNS Games --- */
+/* Logotipo (Efeito Neon) */
 .logo-gamer {
     height: 100px;
     width: auto;
     object-fit: contain;
     padding: 6px;
     border-radius: 50%; 
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%); /* Luz de fundo */
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
     filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.70)) 
-            drop-shadow(0 0 10px rgba(139, 0, 0, 0.8)); /* Sombras brilhantes (Glow) */
+            drop-shadow(0 0 10px rgba(139, 0, 0, 0.8));
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .logo-gamer:hover {
-    transform: scale(1.05); /* Pequeno zoom ao passar o mouse */
+    transform: scale(1.05); 
     filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.85)) 
-            drop-shadow(0 0 16px rgba(255, 0, 0, 0.95)) !important; /* Intensifica o brilho */
+            drop-shadow(0 0 16px rgba(255, 0, 0, 0.95)) !important;
 }
 
-/* --- Menu Dropdown (Categorias do Header) --- */
+/* Dropdown da Conta do Usuário */
 .navbar .dropdown-menu {
     background-color: #1e1e1e !important;
     border: 1px solid #333333 !important;
@@ -109,7 +103,7 @@ h1, h2, h3, h4, h5 {
     border-top: 1px solid #333333 !important;
 }
 
-/* --- Barra de Busca --- */
+/* Barra de Pesquisa */
 .navbar .form-control {
     background-color: #1e1e1e !important;
     border: 1px solid #333333 !important;
@@ -124,21 +118,18 @@ h1, h2, h3, h4, h5 {
 .navbar .form-control:focus {
     background-color: #252525 !important;
     border-color: #8B0000 !important;
-    box-shadow: 0 0 10px rgba(139, 0, 0, 0.5) !important; /* Brilho vermelho ao digitar */
+    box-shadow: 0 0 10px rgba(139, 0, 0, 0.5) !important; 
 }
 
-/* =========================================
-   4. MENU LATERAL (FILTRO DE CATEGORIAS)
-   Estilos do painel esquerdo na página de produtos
-   ========================================= */
+/* =========================================================
+   4. MENU LATERAL (FILTROS DE CATEGORIAS)
+   ========================================================= */
 
-/* Cabeçalho do painel de filtros */
 .card-header {
     background-color: #141414 !important;
     border-bottom: 2px solid #8B0000 !important;
 }
 
-/* Itens da lista de categorias */
 .list-group-item {
     background-color: #1e1e1e !important;
     color: #e0e0e0 !important;
@@ -151,12 +142,11 @@ h1, h2, h3, h4, h5 {
     color: #ffffff !important;
 }
 
-/* =========================================
-   5. CARTÕES DE PRODUTO (VITRINE)
-   Estrutura, imagens, textos e botões dos cards
-   ========================================= */
+/* =========================================================
+   5. CARTÕES DE PRODUTO (VITRINE E WISHLIST)
+   ========================================================= */
 
-/* Estrutura base do cartão */
+/* Caixa principal do cartão */
 .card {
     background-color: #1e1e1e;
     border: none;
@@ -166,11 +156,10 @@ h1, h2, h3, h4, h5 {
 }
 
 .card:hover {
-    transform: translateY(-5px); /* Efeito de levitação */
+    transform: translateY(-5px); 
     box-shadow: 0 10px 20px rgba(0,0,0,0.5);
 }
 
-/* Textos e links dentro dos cartões */
 .card .text-muted {
     color: #a0a0a0 !important;
 }
@@ -188,7 +177,7 @@ h1, h2, h3, h4, h5 {
     color: #8B0000 !important;
 }
 
-/* --- Tratamento das Imagens dos Produtos --- */
+/* Tratamento da Imagem do Jogo/Produto */
 .card-img-container {
     position: relative;
     overflow: hidden;
@@ -197,26 +186,26 @@ h1, h2, h3, h4, h5 {
     border-top-right-radius: 10px;
 }
 
-/* Padronização de tamanho (280px) para qualquer imagem de produto */
 .produto-imagem, 
 .card-img-top {
     height: 280px;
-    object-fit: cover;
-    object-position: top;
-    background-color: #141414;
+    width: 100%;
+    object-fit: contain; 
+    object-position: center; 
+    background-color: #141414; 
     border-bottom: 2px solid #2a2a2a;
-    filter: brightness(0.9) contrast(1.05); /* Visual ligeiramente cinematográfico */
+    filter: brightness(0.9) contrast(1.05);
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s ease, border-color 0.3s ease;
+    padding: 10px; 
 }
 
-/* Animação na imagem ao passar o mouse no cartão */
 .produto-card:hover .produto-imagem {
     transform: scale(1.05);
     filter: brightness(1.05) contrast(1.1);
     border-bottom-color: #8B0000;
 }
 
-/* --- Etiquetas (Badges) nos Cartões --- */
+/* Etiquetas (Badges) flutuantes sobre a imagem */
 .card-badge {
     position: absolute;
     top: 10px;
@@ -231,7 +220,6 @@ h1, h2, h3, h4, h5 {
     backdrop-filter: blur(4px);
 }
 
-/* Badges de Status (Disponível/Esgotado) */
 .badge-gamer-success {
     background-color: rgba(25, 135, 84, 0.15) !important;
     color: #1f9d55 !important;
@@ -248,7 +236,23 @@ h1, h2, h3, h4, h5 {
     font-weight: 600;
 }
 
-/* --- Botões de Ação Gamers --- */
+.badge-gamer-warning {
+    background-color: rgba(255, 193, 7, 0.15) !important;
+    color: #ffc107 !important;
+    border: 1px solid #ffc107;
+    box-shadow: 0 0 8px rgba(255, 193, 7, 0.3);
+    font-weight: 600;
+}
+
+.badge-gamer-info {
+    background-color: rgba(13, 202, 240, 0.15) !important;
+    color: #0dcaf0 !important;
+    border: 1px solid #0dcaf0;
+    box-shadow: 0 0 8px rgba(13, 202, 240, 0.3);
+    font-weight: 600;
+}
+
+/* Botões de Ação (Comprar / Detalhes) */
 .btn-gamer-primary {
     background-color: #8B0000 !important;
     color: #ffffff !important;
@@ -288,10 +292,72 @@ h1, h2, h3, h4, h5 {
     transform: translateY(-2px);
 }
 
-/* =========================================
-   6. CUSTOMIZAÇÃO DO NAVEGADOR
-   Barra de rolagem (Scrollbar) temática
-   ========================================= */
+/* =========================================================
+   6. PÁGINA DE DETALHES DO PRODUTO E AVALIAÇÕES
+   ========================================================= */
+
+/* Título e Preço com Brilho Vermelho */
+.produto-info-container h1, 
+.produto-info-container h3 {
+    color: #ffffff !important;
+    text-shadow: 0px 0px 8px rgba(220, 53, 69, 0.8), 
+                 0px 0px 16px rgba(220, 53, 69, 0.5) !important;
+}
+
+/* Descrição e Labels nítidos a branco */
+.produto-info-container p.text-muted,
+.produto-info-container label {
+    color: #ffffff !important;
+    text-shadow: none !important;
+}
+
+/* Área de Avaliações (Textos totalmente protegidos de efeitos para legibilidade) */
+.avaliacoes-lista p, 
+.avaliacoes-lista strong, 
+.avaliacoes-lista small,
+.avaliacoes-lista .card-body p, 
+.avaliacoes-lista .card-body strong, 
+.avaliacoes-lista .card-body small {
+    color: #ffffff !important;
+    text-shadow: none !important;
+}
+
+/* =========================================================
+   7. RODAPÉ (FOOTER)
+   ========================================================= */
+
+/* Força texto base do rodapé a branco */
+footer h5, 
+footer p, 
+footer span, 
+footer li a {
+    color: #ffffff !important;
+    text-shadow: none !important; 
+}
+
+/* Ícones das redes sociais a branco por padrão */
+footer .btn-outline-secondary i {
+    color: #ffffff !important;
+}
+
+/* Links do rodapé e sua animação base */
+footer a {
+    text-decoration: none;
+    transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease;
+}
+
+/* Efeito ao passar o cursor no rodapé: Vermelho + Salto + Glow */
+footer a:hover {
+    color: #dc3545 !important;
+    text-shadow: 0px 0px 10px rgba(220, 53, 69, 0.8) !important;
+    transform: translateY(-2px);
+}
+
+/* =========================================================
+   8. CUSTOMIZAÇÃO DO NAVEGADOR (SCROLLBAR)
+   Barra de rolagem temática
+   ========================================================= */
+
 ::-webkit-scrollbar {
     width: 10px;
     background-color: #121212;
@@ -309,4 +375,14 @@ h1, h2, h3, h4, h5 {
 
 ::-webkit-scrollbar-thumb:hover {
     background-color: #8B0000;
+}
+
+/* =========================================================
+   CLASSE UTILITÁRIA PARTILHADA: GLOW VERMELHO
+   Pode ser usada no Rodapé, Detalhe do Produto, etc.
+   ========================================================= */
+.texto-glow-vermelho {
+    color: #ffffff !important;
+    text-shadow: 0px 0px 8px rgba(220, 53, 69, 0.8), 
+                 0px 0px 16px rgba(220, 53, 69, 0.5) !important;
 }

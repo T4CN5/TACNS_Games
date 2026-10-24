@@ -13,6 +13,7 @@
 
                 <thead>
                     <tr>
+                        <th>Itens</th>
                         <th>Número</th>
                         <th>Data</th>
                         <th>Total</th>
@@ -24,6 +25,11 @@
                 <tbody>
                     {% for pedido in pedidos %}
                         <tr>
+                            <td>
+                                {% for item in pedido.itens.all %}
+                                    <img src="{{ item.produto.imagem.url }}" alt="{{ item.produto.nome }}" width="80">
+                                {% endfor %}
+                            </td>
                             <td>#{{ pedido.id }}</td>
 
                             <td>
